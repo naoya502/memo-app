@@ -1,7 +1,7 @@
 import { mockMethods } from 'aspida-mock'
 
 export const users = [
-  { firstname: 'Franklin', lastname: 'Potter' },
+  { firstname: 'Naoya', lastname: 'Komatsu' },
   { firstname: 'Hamaad', lastname: 'Collins' },
   { firstname: 'Morris', lastname: 'Dejesus' },
 ].map((user, id) => ({ id, ...user }))

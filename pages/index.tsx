@@ -19,6 +19,7 @@ export default defineComponent({
     onMounted(async () => {
       // users.value = await ctx.$api.users.$get()
       rooms.value = await ctx.$api.rooms.$get()
+      console.log(rooms.value)
     })
 
     return () => (
