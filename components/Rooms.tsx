@@ -1,5 +1,6 @@
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import type { Room } from '~/api/rooms'
+import styles from './styles.module.css'
 
 export const Rooms = defineComponent({
   props: {
@@ -8,11 +9,16 @@ export const Rooms = defineComponent({
       required: true,
     },
   },
+
   setup(props) {
     return () => (
-      <div>
+      <div class={styles.container}>
         {props.rooms.map((room) => (
-          <div key={room.roomId} style={{ color: room.color }}>
+          <div
+            class={styles.box}
+            key={room.roomId}
+            style={{ color: room.color, gridRow: room.roomId / 4 }}
+          >
             {room.roomName}
           </div>
         ))}
