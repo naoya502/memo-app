@@ -4,11 +4,13 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
-// import type { User } from '~/api/users'
-// import { Tutorial } from '~/components/Tutorial'
-import type { Room } from '~/api/rooms'
+import { Room } from '~/api/@types'
 import { Rooms } from '~/components/Rooms'
 import styles from './styles.module.css'
+
+export type OptionalQuery = {
+  roomId: number
+}
 
 export default defineComponent({
   setup() {
@@ -19,11 +21,12 @@ export default defineComponent({
     onMounted(async () => {
       // users.value = await ctx.$api.users.$get()
       rooms.value = await ctx.$api.rooms.$get()
+      console.log(rooms.value)
     })
 
     return () => (
       // <div class={styles.sampleFont}>
-      <div class={styles.sampleFont}>
+      <div class={styles.container}>
         {/* users.value && <Tutorial users={users.value} /> */}
         {rooms.value && <Rooms rooms={rooms.value} />}
       </div>

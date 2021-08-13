@@ -1,25 +1,15 @@
 .nuxtLogo {
   height: 180px;
 }
-.container {
+.roomContainer {
   display: grid;
-  grid-gap: 4px;
+  grid-gap: 0;
   grid-template-rows: 106px 106px 106px 106px;
-  .box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .room0 {
-      grid-row: 1/4;
-    }
-    .room1 {
-      grid-row: 2/4;
-    }
-    .room2 {
-      grid-row: 3/4;
-    }
-    .room3 {
-      grid-row: 4/4;
-    }
-  }
+}
+.roomBox {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
 }

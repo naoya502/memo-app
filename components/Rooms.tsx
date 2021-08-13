@@ -1,5 +1,5 @@
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
-import type { Room } from '~/api/rooms'
+import { defineComponent, PropType, useContext } from '@nuxtjs/composition-api'
+import { Room } from '~/api/@types'
 import styles from './styles.module.css'
 
 export const Rooms = defineComponent({
@@ -11,16 +11,24 @@ export const Rooms = defineComponent({
   },
 
   setup(props) {
+    const ctx = useContext()
     return () => (
-      <div class={styles.container}>
+      <div class={styles.roomContainer}>
         {props.rooms.map((room) => (
-          <div
-            class={styles.box}
+          <nuxt-link
+            class={styles.roomBox}
             key={room.roomId}
-            style={{ color: room.color, gridRow: room.roomId / 4 }}
+            to={ctx.$pagesPath.$url({ query: { roomId: room.roomId } })}
           >
-            {room.roomName}
-          </div>
+            <div
+              style={{
+                color: room.color,
+                gridRow: room.roomId / props.rooms.length,
+              }}
+            >
+              {room.roomName}
+            </div>
+          </nuxt-link>
         ))}
       </div>
     )
