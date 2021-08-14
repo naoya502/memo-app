@@ -1,15 +1,36 @@
 .nuxtLogo {
   height: 180px;
 }
-.roomContainer {
+.sidebarContainer {
   display: grid;
   grid-gap: 0;
   grid-template-rows: 106px 106px 106px 106px;
 }
-.roomBox {
+.sidebarBox {
   display: flex;
   align-items: center;
   justify-content: left;
   border-right: 1px solid #333;
   border-bottom: 1px solid #333;
+}
+.boardContainer {
+  position: relative;
+  background-color: burlywood;
+}
+.cardContainer {
+  position: absolute;
+  width: 240px;
+  height: 320px;
+}
+.stickyArea {
+  height: 32px;
+  background-color: #eee8;
+}
+.textArea {
+  max-width: 240px;
+  max-height: 288px;
+  width: 240px;
+  height: 288px;
+  filter: invert(100%) grayscale(100%);
+  background-color: transparent;
 }

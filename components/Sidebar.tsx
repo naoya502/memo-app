@@ -2,7 +2,7 @@ import { defineComponent, PropType, useContext } from '@nuxtjs/composition-api'
 import { Room } from '~/api/@types'
 import styles from './styles.module.css'
 
-export const Rooms = defineComponent({
+export const Sidebar = defineComponent({
   props: {
     rooms: {
       type: Array as PropType<Room[]>,
@@ -13,10 +13,10 @@ export const Rooms = defineComponent({
   setup(props) {
     const ctx = useContext()
     return () => (
-      <div class={styles.roomContainer}>
+      <div class={styles.sidebarContainer}>
         {props.rooms.map((room) => (
           <nuxt-link
-            class={styles.roomBox}
+            class={styles.sidebarBox}
             key={room.roomId}
             to={ctx.$pagesPath.$url({ query: { roomId: room.roomId } })}
           >

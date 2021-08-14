@@ -1,4 +1,5 @@
 .container {
+  height: 100vh;
   display: grid;
   grid-gap: 0;
   grid-template-columns: 160px 1759px;
