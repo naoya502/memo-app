@@ -9,6 +9,12 @@ export const Board = defineComponent({
       type: Array as PropType<Card[]>,
       required: true,
     },
+    input: {
+      type: Function as PropType<
+        (cardId: Card['cardId'], text: string) => void
+      >,
+      required: true,
+    },
   },
 
   setup(props) {
@@ -18,11 +24,12 @@ export const Board = defineComponent({
         {props.cards.map((card) => (
           <StickyCard
             key={card.cardId}
+            card={card}
+            input={(text) => props.input(card.cardId, text)}
             style={{
               color: card.color,
               gridRow: card.cardId / props.cards.length,
             }}
-            card={card}
           />
         ))}
       </div>
