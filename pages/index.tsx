@@ -6,7 +6,7 @@ import {
   useContext,
   useRoute,
 } from '@nuxtjs/composition-api'
-import { Room } from '~/api/@types'
+import { Card, Room } from '~/api/@types'
 import { Board } from '~/components/Board'
 import { Sidebar } from '~/components/Sidebar'
 import styles from './styles.module.css'
@@ -31,13 +31,30 @@ export default defineComponent({
       rooms.value = await ctx.$api.rooms.$get()
     })
 
+    const updateCardText = async (cardId: Card['cardId'], text: string) => {
+      const validateRoomId = roomId.value
+      if (validateRoomId === undefined) return
+
+      await ctx.$api.rooms
+        ._roomId(validateRoomId)
+        .cards._cardId(cardId)
+        .$patch({ body: { text } })
+
+      rooms.value = await ctx.$api.rooms.$get()
+    }
+
     return () =>
       rooms.value ? (
         // <div class={styles.sampleFont}>
         <div class={styles.container}>
           {/* users.value && <Tutorial users={users.value} /> */}
           {<Sidebar rooms={rooms.value} />}
-          {roomId.value != undefined && <Board cards={rooms.value[0].cards} />}
+          {roomId.value != undefined && (
+            <Board
+              cards={rooms.value[roomId.value].cards}
+              input={updateCardText}
+            />
+          )}
         </div>
       ) : (
         <div>Loading...</div>
