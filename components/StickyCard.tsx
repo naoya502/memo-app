@@ -5,7 +5,7 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 import { Card, Position } from '~/api/@types'
-import { DragHandler } from './Draghandler'
+import { DragHandler } from './DragHandler'
 import styles from './styles.module.css'
 
 export const StickyCard = defineComponent({
