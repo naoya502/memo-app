@@ -36,7 +36,6 @@ export const DragHandler = defineComponent({
     return () => (
       <div
         class={styles.stickyArea}
-        is="dragHandler"
         onDragstart={onDragStart}
         onDrag={onDrag}
         onDragend={onDragEnd}
