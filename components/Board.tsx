@@ -1,4 +1,4 @@
-import { defineComponent, PropType, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import { Card } from '~/api/@types'
 import { StickyCard } from './StickyCard'
 import styles from './styles.module.css'
@@ -26,8 +26,6 @@ export const Board = defineComponent({
   },
 
   setup(props) {
-    const ctx = useContext()
-
     const onClick = () => props.add()
 
     return () => (

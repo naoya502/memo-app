@@ -12,6 +12,10 @@ export default mockMethods<Methods>({
     if (typeof roomId === 'string' || typeof cardId === 'string')
       return { status: 400 }
 
+    /*  カードIDについてはMock段階なので絶対にぶつからない桁数で生成
+        ランダムで０.～を生成して文字列に変換
+        文字列の「0.」以降をスライス
+        スライスした文字列を「＋」で数値にコンバート  */
     const tmpcardId = +`${Math.random()}`.slice(2)
     const tmpColor = colors[Math.floor(Math.random() * colors.length)]
 
@@ -32,6 +36,7 @@ export default mockMethods<Methods>({
         status: 400,
       }
 
+    // [?]はundefinedだった場合、その後の[.cards.push(card)]を実行しないため、undefinedによるバグがなくなる
     room?.cards.push(card)
 
     return { status: 200, resBody: card }
