@@ -1,5 +1,13 @@
 import { Room } from './@types'
 
+export const colors: string[] = [
+  '#768EB7',
+  '#65A6E8',
+  '#768EB7',
+  '#4182CE',
+  '#2565B7',
+  '#B59599',
+]
 export const rooms: Room[] = [
   {
     roomId: 0,
@@ -9,7 +17,7 @@ export const rooms: Room[] = [
       {
         cardId: 0,
         text: 'room1_card1',
-        color: 'red',
+        color: colors[0],
         position: {
           x: 200,
           y: 100,
@@ -18,7 +26,7 @@ export const rooms: Room[] = [
       {
         cardId: 1,
         text: 'room1_card2',
-        color: 'yellow',
+        color: colors[3],
         position: {
           x: 300,
           y: 120,
@@ -27,7 +35,7 @@ export const rooms: Room[] = [
       {
         cardId: 2,
         text: 'room1_card3',
-        color: 'blue',
+        color: colors[5],
         position: {
           x: 400,
           y: 140,
@@ -43,7 +51,7 @@ export const rooms: Room[] = [
       {
         cardId: 0,
         text: 'room2_card1',
-        color: 'red',
+        color: colors[0],
         position: {
           x: 200,
           y: 100,
@@ -52,7 +60,7 @@ export const rooms: Room[] = [
       {
         cardId: 1,
         text: 'room2_card2',
-        color: 'yellow',
+        color: colors[3],
         position: {
           x: 300,
           y: 120,
@@ -68,7 +76,7 @@ export const rooms: Room[] = [
       {
         cardId: 0,
         text: 'room3_card1',
-        color: 'red',
+        color: colors[0],
         position: {
           x: 200,
           y: 100,

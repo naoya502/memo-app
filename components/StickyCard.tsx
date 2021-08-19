@@ -3,9 +3,9 @@ import {
   defineComponent,
   PropType,
   ref,
-  useContext,
 } from '@nuxtjs/composition-api'
-import { Card } from '~/api/@types'
+import { Card, Position } from '~/api/@types'
+import { DragHandler } from './DragHandler'
 import styles from './styles.module.css'
 
 export const StickyCard = defineComponent({
@@ -18,9 +18,20 @@ export const StickyCard = defineComponent({
       type: Function as PropType<(text: string) => void>,
       required: true,
     },
+    delete: {
+      type: Function as PropType<() => void>,
+      required: true,
+    },
+    position: {
+      type: Function as PropType<(position: Position) => void>,
+      required: true,
+    },
+    isMouseMoving: {
+      type: Function as PropType<(flg: string) => void>,
+      required: false,
+    },
   },
   setup(props) {
-    const ctx = useContext()
     const isForcusing = ref(false)
     const localtext = ref(props.card.text)
     const text = computed(() =>
@@ -34,17 +45,51 @@ export const StickyCard = defineComponent({
     }
     const onFocus = () => (isForcusing.value = true)
     const onBlur = () => (isForcusing.value = false)
+    const onClick = () => props.delete()
+
+    const isMoving = ref(false)
+    const localPosition = ref(props.card.position)
+    const containerPosition = ref(props.card.position)
+    const onMouseMove = (position: Position) => {
+      const movex = props.card.position.x + position.x
+      const movey = props.card.position.y + position.y
+      localPosition.value = {
+        x: localPosition.value.x + position.x,
+        y: localPosition.value.y + position.y,
+      }
+
+      isMoving.value = movex > 0 ? true : false
+      props.card.position.x = isMoving.value ? movex : props.card.position.x
+      props.card.position.y = isMoving.value ? movey : props.card.position.y
+
+      localPosition.value = props.card.position
+      containerPosition.value = isMoving.value
+        ? localPosition.value
+        : props.card.position
+      props.position({ x: props.card.position.x, y: props.card.position.y })
+    }
 
     return () => (
       <div
         class={styles.cardContainer}
         style={{
-          top: `${props.card.position.y}px`,
-          left: `${props.card.position.x}px`,
+          top: `${containerPosition.value.y}px`,
+          left: `${containerPosition.value.x}px`,
           backgroundColor: props.card.color,
         }}
       >
-        <div class={styles.stickyArea}></div>
+        {
+          <DragHandler
+            card={props.card}
+            position={(p) => {
+              onMouseMove(p)
+            }}
+            draggable="true"
+          />
+        }
+        <button class={styles.deleteButtom} type="submit" onClick={onClick}>
+          X
+        </button>
         <textarea
           class={styles.textArea}
           style="border:none;"

@@ -1,11 +1,13 @@
+export type Position = {
+  x: number
+  y: number
+}
+
 export type Card = {
   cardId: number
   text: string
   color: string
-  position: {
-    x: number
-    y: number
-  }
+  position: Position
 }
 
 export type Room = {
@@ -13,4 +15,8 @@ export type Room = {
   roomName: string
   color: string
   cards: Card[]
+}
+
+export type Color = {
+  color: string
 }

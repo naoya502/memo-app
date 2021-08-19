@@ -6,7 +6,7 @@ import {
   useContext,
   useRoute,
 } from '@nuxtjs/composition-api'
-import { Card, Room } from '~/api/@types'
+import { Card, Position, Room } from '~/api/@types'
 import { Board } from '~/components/Board'
 import { Sidebar } from '~/components/Sidebar'
 import styles from './styles.module.css'
@@ -43,6 +43,42 @@ export default defineComponent({
       rooms.value = await ctx.$api.rooms.$get()
     }
 
+    const deleteCard = async (cardId: Card['cardId']) => {
+      const validateRoomId = roomId.value
+      if (validateRoomId === undefined) return
+
+      await ctx.$api.rooms
+        ._roomId(validateRoomId)
+        .cards._cardId(cardId)
+        .$delete()
+
+      rooms.value = await ctx.$api.rooms.$get()
+    }
+
+    const addCard = async () => {
+      const validateRoomId = roomId.value
+      if (validateRoomId === undefined) return
+
+      await ctx.$api.rooms._roomId(validateRoomId).cards.$post()
+
+      rooms.value = await ctx.$api.rooms.$get()
+    }
+
+    const updatePositionCard = async (
+      cardId: Card['cardId'],
+      position: Position
+    ) => {
+      const validateRoomId = roomId.value
+      if (validateRoomId === undefined) return
+
+      await ctx.$api.rooms
+        ._roomId(validateRoomId)
+        .cards._cardId(cardId)
+        .$patch({ body: { position } })
+
+      rooms.value = await ctx.$api.rooms.$get()
+    }
+
     return () =>
       rooms.value ? (
         // <div class={styles.sampleFont}>
@@ -53,6 +89,9 @@ export default defineComponent({
             <Board
               cards={rooms.value[roomId.value].cards}
               input={updateCardText}
+              delete={deleteCard}
+              add={addCard}
+              position={updatePositionCard}
             />
           )}
         </div>
