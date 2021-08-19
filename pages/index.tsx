@@ -64,6 +64,10 @@ export default defineComponent({
       rooms.value = await ctx.$api.rooms.$get()
     }
 
+    const pos = async () => {
+      rooms.value = await ctx.$api.rooms.$get()
+    }
+
     return () =>
       rooms.value ? (
         // <div class={styles.sampleFont}>
@@ -76,6 +80,7 @@ export default defineComponent({
               input={updateCardText}
               delete={deleteCard}
               add={addCard}
+              position={pos}
             />
           )}
         </div>

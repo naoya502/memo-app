@@ -3,9 +3,9 @@ import {
   defineComponent,
   PropType,
   ref,
-  useContext,
 } from '@nuxtjs/composition-api'
-import { Card } from '~/api/@types'
+import { Card, Position } from '~/api/@types'
+import { DragHandler } from './Draghandler'
 import styles from './styles.module.css'
 
 export const StickyCard = defineComponent({
@@ -22,9 +22,16 @@ export const StickyCard = defineComponent({
       type: Function as PropType<() => void>,
       required: true,
     },
+    position: {
+      type: Function as PropType<(position: Position) => void>,
+      required: true,
+    },
+    isMouseMoving: {
+      type: Function as PropType<(flg: string) => void>,
+      required: false,
+    },
   },
   setup(props) {
-    const ctx = useContext()
     const isForcusing = ref(false)
     const localtext = ref(props.card.text)
     const text = computed(() =>
@@ -40,6 +47,10 @@ export const StickyCard = defineComponent({
     const onBlur = () => (isForcusing.value = false)
     const onClick = () => props.delete()
 
+    const onMouseMove = (position: Position) => {
+      console.log(position.x, position.y)
+    }
+
     return () => (
       <div
         class={styles.cardContainer}
@@ -49,11 +60,17 @@ export const StickyCard = defineComponent({
           backgroundColor: props.card.color,
         }}
       >
-        <div class={styles.stickyArea}>
-          <button class={styles.deleteButtom} type="submit" onClick={onClick}>
-            X
-          </button>
-        </div>
+        {
+          <DragHandler
+            card={props.card}
+            position={(p) => {
+              onMouseMove(p)
+            }}
+          />
+        }
+        <button class={styles.deleteButtom} type="submit" onClick={onClick}>
+          X
+        </button>
         <textarea
           class={styles.textArea}
           style="border:none;"
