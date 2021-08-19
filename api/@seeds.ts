@@ -1,5 +1,13 @@
 import { Room } from './@types'
 
+export const colors: string[] = [
+  '#768EB7',
+  '#65A6E8',
+  '#768EB7',
+  '#4182CE',
+  '#2565B7',
+  '#B59599',
+]
 export const rooms: Room[] = [
   {
     roomId: 0,
