@@ -3,6 +3,9 @@
     "octref.vetur",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "stylelint.vscode-stylelint"
+    "stylelint.vscode-stylelint",
+    "jdinhlife.gruvbox",
+    "oderwat.indent-rainbow",
+    "vscodevim.vim"
   ]
 }

@@ -15,6 +15,10 @@ export const Board = defineComponent({
       >,
       required: true,
     },
+    delete: {
+      type: Function as PropType<(cardId: Card['cardId']) => void>,
+      required: true,
+    },
   },
 
   setup(props) {
@@ -26,6 +30,7 @@ export const Board = defineComponent({
             key={card.cardId}
             card={card}
             input={(text) => props.input(card.cardId, text)}
+            delete={() => props.delete(card.cardId)}
             style={{
               color: card.color,
               gridRow: card.cardId / props.cards.length,
