@@ -17,7 +17,7 @@ export const rooms: Room[] = [
       {
         cardId: 0,
         text: 'room1_card1',
-        color: 'red',
+        color: colors[0],
         position: {
           x: 200,
           y: 100,
@@ -26,7 +26,7 @@ export const rooms: Room[] = [
       {
         cardId: 1,
         text: 'room1_card2',
-        color: 'yellow',
+        color: colors[3],
         position: {
           x: 300,
           y: 120,
@@ -35,7 +35,7 @@ export const rooms: Room[] = [
       {
         cardId: 2,
         text: 'room1_card3',
-        color: 'blue',
+        color: colors[5],
         position: {
           x: 400,
           y: 140,
@@ -51,7 +51,7 @@ export const rooms: Room[] = [
       {
         cardId: 0,
         text: 'room2_card1',
-        color: 'red',
+        color: colors[0],
         position: {
           x: 200,
           y: 100,
@@ -60,7 +60,7 @@ export const rooms: Room[] = [
       {
         cardId: 1,
         text: 'room2_card2',
-        color: 'yellow',
+        color: colors[3],
         position: {
           x: 300,
           y: 120,
@@ -76,7 +76,7 @@ export const rooms: Room[] = [
       {
         cardId: 0,
         text: 'room3_card1',
-        color: 'red',
+        color: colors[0],
         position: {
           x: 200,
           y: 100,

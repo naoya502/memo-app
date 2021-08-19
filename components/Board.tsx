@@ -1,5 +1,5 @@
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
-import { Card } from '~/api/@types'
+import { Card, Position } from '~/api/@types'
 import { StickyCard } from './StickyCard'
 import styles from './styles.module.css'
 
@@ -23,6 +23,12 @@ export const Board = defineComponent({
       type: Function as PropType<() => void>,
       required: true,
     },
+    position: {
+      type: Function as PropType<
+        (cardId: Card['cardId'], postion: Position) => void
+      >,
+      required: true,
+    },
   },
 
   setup(props) {
@@ -36,6 +42,7 @@ export const Board = defineComponent({
             card={card}
             input={(text) => props.input(card.cardId, text)}
             delete={() => props.delete(card.cardId)}
+            position={(positon) => props.position(card.cardId, positon)}
             style={{
               color: card.color,
               gridRow: card.cardId / props.cards.length,
