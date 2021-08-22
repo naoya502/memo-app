@@ -17,28 +17,27 @@ export const DragHandler = defineComponent({
     const isDrag = ref(false)
     const cursor: Position = { x: 0, y: 0 }
 
-    const onDragStart = (target: Event) => {
-      if (!(target instanceof DragEvent)) return
+    const onMouseDown = (target: MouseEvent) => {
       isDrag.value = true
       cursor.x = target.offsetX
       cursor.y = target.offsetY
     }
-    const onDrag = (target: Event) => {
-      if (!(target instanceof DragEvent)) return
+    const onMouseUp = () => {
+      isDrag.value = false
+    }
+    const onMousemove = (target: MouseEvent) => {
+      if (!isDrag.value) return
       const px = isDrag.value ? +target.offsetX - cursor.x : 0
       const py = isDrag.value ? +target.offsetY - cursor.y : 0
       props.position({ x: px, y: py })
     }
-    const onDragEnd = () => {
-      isDrag.value = false
-    }
 
     return () => (
       <div
-        class={styles.stickyArea}
-        onDragstart={onDragStart}
-        onDrag={onDrag}
-        onDragend={onDragEnd}
+        class={isDrag ? styles.stickyArea : styles.movingStickyArea}
+        onMousemove={onMousemove}
+        onMouseup={onMouseUp}
+        onMousedown={onMouseDown}
       ></div>
     )
   },

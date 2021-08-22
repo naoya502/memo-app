@@ -80,7 +80,7 @@ export const StickyCard = defineComponent({
             position={(p) => {
               onMouseMove(p)
             }}
-            draggable="true"
+            // draggable="true"
           />
         }
         <button class={styles.deleteButtom} type="submit" onClick={onClick}>

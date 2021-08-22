@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { defineComponent, PropType, ref } from '@nuxtjs/composition-api'
 import { Card, Position } from '~/api/@types'
 import { StickyCard } from './StickyCard'
 import styles from './styles.module.css'
@@ -33,21 +33,35 @@ export const Board = defineComponent({
 
   setup(props) {
     const onClick = () => props.add()
+    const isClick = ref(false)
+    const onMouseDown = () => {
+      isClick.value = true
+    }
+    const onMouseUp = () => {
+      isClick.value = false
+    }
 
     return () => (
       <div class={styles.boardContainer}>
         {props.cards.map((card) => (
-          <StickyCard
+          <div
             key={card.cardId}
-            card={card}
-            input={(text) => props.input(card.cardId, text)}
-            delete={() => props.delete(card.cardId)}
-            position={(positon) => props.position(card.cardId, positon)}
-            style={{
-              color: card.color,
-              gridRow: card.cardId / props.cards.length,
-            }}
-          />
+            class={isClick.value ? styles.cardMoveArea : styles.cardFixedArea}
+            onMousemove={onMouseDown}
+            onMouseup={onMouseUp}
+          >
+            <StickyCard
+              key={card.cardId}
+              card={card}
+              input={(text) => props.input(card.cardId, text)}
+              delete={() => props.delete(card.cardId)}
+              position={(positon) => props.position(card.cardId, positon)}
+              style={{
+                color: card.color,
+                gridRow: card.cardId / props.cards.length,
+              }}
+            />
+          </div>
         ))}
         <button class={styles.addButtom} type="submit" onClick={onClick}>
           +
