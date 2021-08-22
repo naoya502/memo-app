@@ -49,24 +49,20 @@ export const StickyCard = defineComponent({
 
     const isMoving = ref(false)
     const localPosition = ref(props.card.position)
-    const containerPosition = ref(props.card.position)
+    const containerPosition = computed(() =>
+      localPosition.value === props.card.position
+        ? props.card.position
+        : localPosition.value
+    )
     const onMouseMove = (position: Position) => {
-      const movex = props.card.position.x + position.x
-      const movey = props.card.position.y + position.y
-      localPosition.value = {
-        x: localPosition.value.x + position.x,
-        y: localPosition.value.y + position.y,
-      }
+      const movex = localPosition.value.x + position.x
+      const movey = localPosition.value.y + position.y
 
       isMoving.value = movex > 0 ? true : false
-      props.card.position.x = isMoving.value ? movex : props.card.position.x
-      props.card.position.y = isMoving.value ? movey : props.card.position.y
-
-      localPosition.value = props.card.position
-      containerPosition.value = isMoving.value
-        ? localPosition.value
-        : props.card.position
-      props.position({ x: props.card.position.x, y: props.card.position.y })
+      localPosition.value = isMoving.value
+        ? { x: movex, y: movey }
+        : localPosition.value
+      props.position({ x: localPosition.value.x, y: localPosition.value.y })
     }
 
     return () => (
