@@ -29,16 +29,38 @@ export const Board = defineComponent({
       >,
       required: true,
     },
+    zIndex: {
+      type: Function as PropType<
+        (cardId: Card['cardId'], zIndex: number) => void
+      >,
+      required: true,
+    },
   },
 
   setup(props) {
     const onClick = () => props.add()
-    const isClick = ref(false)
+    const isMoving = ref(false)
+    const maxzIndex = ref(Math.max(...props.cards.map((item) => item.zIndex)))
+    const cardStyle = ref({
+      height: '0%',
+      width: '0%',
+      zIndex: 0,
+    })
     const onMouseDown = () => {
-      isClick.value = true
+      isMoving.value = true
+      cardStyle.value = {
+        height: '100%',
+        width: '100%',
+        zIndex: maxzIndex.value + 1,
+      }
     }
-    const onMouseUp = () => {
-      isClick.value = false
+    const onMouseUp = (cardId: number) => {
+      isMoving.value = false
+      cardStyle.value = {
+        height: '0%',
+        width: '0%',
+        zIndex: cardId,
+      }
     }
 
     return () => (
@@ -46,9 +68,11 @@ export const Board = defineComponent({
         {props.cards.map((card) => (
           <div
             key={card.cardId}
-            class={isClick.value ? styles.cardMoveArea : styles.cardFixedArea}
-            onMousemove={onMouseDown}
-            onMouseup={onMouseUp}
+            class={styles.cardMoveArea}
+            id={'card' + card.cardId + ''}
+            onMousedown={() => onMouseDown()}
+            onMouseup={() => onMouseUp(card.cardId)}
+            style={cardStyle.value}
           >
             <StickyCard
               key={card.cardId}
@@ -56,6 +80,7 @@ export const Board = defineComponent({
               input={(text) => props.input(card.cardId, text)}
               delete={() => props.delete(card.cardId)}
               position={(positon) => props.position(card.cardId, positon)}
+              zIndex={(zIndex) => props.zIndex(card.cardId, zIndex)}
               style={{
                 color: card.color,
                 gridRow: card.cardId / props.cards.length,

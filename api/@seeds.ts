@@ -22,6 +22,7 @@ export const rooms: Room[] = [
           x: 200,
           y: 100,
         },
+        zIndex: 1,
       },
       {
         cardId: 1,
@@ -31,6 +32,7 @@ export const rooms: Room[] = [
           x: 300,
           y: 120,
         },
+        zIndex: 2,
       },
       {
         cardId: 2,
@@ -40,6 +42,7 @@ export const rooms: Room[] = [
           x: 400,
           y: 140,
         },
+        zIndex: 3,
       },
     ],
   },
@@ -56,6 +59,7 @@ export const rooms: Room[] = [
           x: 200,
           y: 100,
         },
+        zIndex: 1,
       },
       {
         cardId: 1,
@@ -65,6 +69,7 @@ export const rooms: Room[] = [
           x: 300,
           y: 120,
         },
+        zIndex: 2,
       },
     ],
   },
@@ -81,6 +86,7 @@ export const rooms: Room[] = [
           x: 200,
           y: 100,
         },
+        zIndex: 1,
       },
     ],
   },

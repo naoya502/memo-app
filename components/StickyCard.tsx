@@ -30,6 +30,10 @@ export const StickyCard = defineComponent({
       type: Function as PropType<(flg: string) => void>,
       required: false,
     },
+    zIndex: {
+      type: Function as PropType<(zIndex: number) => void>,
+      required: true,
+    },
   },
   setup(props) {
     const isForcusing = ref(false)

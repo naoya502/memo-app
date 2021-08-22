@@ -33,17 +33,8 @@
   height: 32px;
   background-color: #eee8;
 }
-.cardFixedArea {
-  position: absolute;
-  z-index: auto;
-  height: 100%;
-  width: 100%;
-}
 .cardMoveArea {
   position: absolute;
-  z-index: 2147483647;
-  height: 100%;
-  width: 100%;
 }
 .addButtom {
   position: absolute;
@@ -55,6 +46,7 @@
   border: none;
   width: 48px;
   cursor: pointer;
+  z-index: 2147483647;
 }
 .stickyArea {
   position: relative;
