@@ -40,27 +40,49 @@ export const Board = defineComponent({
   setup(props) {
     const onClick = () => props.add()
     const isMoving = ref(false)
-    const maxzIndex = ref(Math.max(...props.cards.map((item) => item.zIndex)))
     const cardStyle = ref({
-      height: '0%',
-      width: '0%',
-      zIndex: 0,
+      id: 0,
+      style: { height: '0%', width: '0%', zIndex: 0 },
     })
-    const onMouseDown = () => {
-      isMoving.value = true
-      cardStyle.value = {
-        height: '100%',
-        width: '100%',
-        zIndex: maxzIndex.value + 1,
-      }
+    const propCardStyles = (cardid: number, zIndex: number) => {
+      return (cardStyle.value = {
+        ...cardStyle.value,
+        id: cardid,
+        style: { height: '0%', width: '0%', zIndex: zIndex },
+      })
     }
-    const onMouseUp = (cardId: number) => {
-      isMoving.value = false
-      cardStyle.value = {
-        height: '0%',
-        width: '0%',
-        zIndex: cardId,
-      }
+    const localCardStyles = ref(
+      props.cards.map((c) => propCardStyles(c.cardId, c.zIndex))
+    )
+    const maxzIndex = ref(
+      Math.max(...props.cards.map((item) => item.zIndex)) + 1
+    )
+    const onMouseDown = (cardId: number) => {
+      if (!localCardStyles.value) return
+      localCardStyles.value = localCardStyles.value.map((s) =>
+        s.id === cardId
+          ? {
+              ...localCardStyles.value,
+              id: s.id,
+              style: { height: '100%', width: '100%', zIndex: maxzIndex.value },
+            }
+          : {
+              ...localCardStyles.value,
+              id: s.id,
+              style: { height: '0%', width: '0%', zIndex: s.style.zIndex },
+            }
+      )
+    }
+    const onMouseUp = () => {
+      localCardStyles.value = localCardStyles.value.map((s) => ({
+        ...localCardStyles.value,
+        id: s.id,
+        style: { height: '0%', width: '0%', zIndex: s.style.zIndex },
+      }))
+    }
+    const getStyle = (cardId: number) => {
+      console.log(localCardStyles.value.find((s) => s.id === cardId)?.style)
+      return localCardStyles.value.find((s) => s.id === cardId)?.style
     }
 
     return () => (
@@ -69,10 +91,10 @@ export const Board = defineComponent({
           <div
             key={card.cardId}
             class={styles.cardMoveArea}
-            id={'card' + card.cardId + ''}
-            onMousedown={() => onMouseDown()}
-            onMouseup={() => onMouseUp(card.cardId)}
-            style={cardStyle.value}
+            id={'card' + `${card.cardId}`}
+            style={getStyle(card.cardId)}
+            onMousedown={() => onMouseDown(card.cardId)}
+            onMouseup={onMouseUp}
           >
             <StickyCard
               key={card.cardId}

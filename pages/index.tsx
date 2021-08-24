@@ -79,6 +79,7 @@ export default defineComponent({
       rooms.value = await ctx.$api.rooms.$get()
     }
     const updateZindex = async (cardId: Card['cardId'], zIndex: number) => {
+      console.log(zIndex)
       const validateRoomId = roomId.value
       if (validateRoomId === undefined) return
 
