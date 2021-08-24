@@ -37,7 +37,8 @@ export default mockMethods<Methods>({
         status: 400,
       }
 
-    card.zIndex = room.cards.length + 1
+    const zIndexs = room.cards.map((c) => c.zIndex)
+    card.zIndex = Math.max(...zIndexs) + 1
 
     // [?]はundefinedだった場合、その後の[.cards.push(card)]を実行しないため、undefinedによるバグがなくなる
     room?.cards.push(card)
