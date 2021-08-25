@@ -1,6 +1,6 @@
-import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
+import { defineComponent, PropType, ref, watch } from '@nuxtjs/composition-api'
 import { Card, Position } from '~/api/@types'
-import { CardContainer } from './CardContainer'
+import { StickyCard } from './StickyCard'
 import styles from './styles.module.css'
 
 export const Board = defineComponent({
@@ -29,31 +29,37 @@ export const Board = defineComponent({
       >,
       required: true,
     },
-    zIndex: {
-      type: Function as PropType<
-        (cardId: Card['cardId'], zIndex: number) => void
-      >,
+    updateOrder: {
+      type: Function as PropType<(cardId: number[]) => void>,
       required: true,
     },
   },
 
   setup(props) {
-    const maxzIndex = computed(() =>
-      Math.max(...props.cards.map((item) => item.zIndex))
-    )
     const onClick = () => props.add()
+    const cardIds = ref(props.cards.map((card) => card.cardId))
+    watch(
+      () => props.cards,
+      () => (cardIds.value = props.cards.map((card) => card.cardId))
+    )
+    const addCardIdToTail = (id: number) => {
+      cardIds.value = [...cardIds.value.filter((card) => card !== id), id]
+      props.updateOrder(cardIds.value)
+    }
+    const getCardById = (cardId: number) =>
+      props.cards.filter((card) => card.cardId === cardId)[0]
+
     return () => (
       <div class={styles.boardContainer}>
-        {props.cards.map((card, i) => (
-          <CardContainer
-            key={card.cardId}
-            card={card}
-            input={(text) => props.input(card.cardId, text)}
-            delete={() => props.delete(card.cardId)}
-            position={(position) => props.position(card.cardId, position)}
-            zIndex={(cardId, zIndex) => props.zIndex(card.cardId, zIndex)}
-            maxzIndex={maxzIndex.value}
-          />
+        {cardIds.value.map((cardId) => (
+          <div key={cardId} onMousedown={() => addCardIdToTail(cardId)}>
+            <StickyCard
+              card={getCardById(cardId)}
+              input={(text) => props.input(cardId, text)}
+              delete={() => props.delete(cardId)}
+              position={(position) => props.position(cardId, position)}
+            />
+          </div>
         ))}
         <button class={styles.addButtom} type="submit" onClick={onClick}>
           +

@@ -16,6 +16,7 @@ export type Room = {
   roomName: string
   color: string
   cards: Card[]
+  order: number[]
 }
 
 export type Color = {

@@ -45,6 +45,7 @@ export const rooms: Room[] = [
         zIndex: 3,
       },
     ],
+    order: [0, 1, 2],
   },
   {
     roomId: 1,
@@ -72,6 +73,7 @@ export const rooms: Room[] = [
         zIndex: 2,
       },
     ],
+    order: [0, 1],
   },
   {
     roomId: 2,
@@ -89,6 +91,7 @@ export const rooms: Room[] = [
         zIndex: 1,
       },
     ],
+    order: [0],
   },
-  { roomId: 3, roomName: 'room4', color: 'green', cards: [] },
+  { roomId: 3, roomName: 'room4', color: 'green', cards: [], order: [] },
 ]
