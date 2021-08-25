@@ -70,7 +70,6 @@ export const CardContainer = defineComponent({
       localCardStyles.value = expandMoveArea(cardId, updatezIndex)
       isMoving.value = true
       props.zIndex(props.card.cardId, updatezIndex)
-      console.log(updatezIndex)
     }
     const onMouseUp = (cardId: number) => {
       const updatezIndex = localCardStyles.value.style.zIndex

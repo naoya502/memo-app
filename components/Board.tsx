@@ -1,9 +1,4 @@
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  PropType,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 import { Card, Position } from '~/api/@types'
 import { CardContainer } from './CardContainer'
 import styles from './styles.module.css'
@@ -47,9 +42,6 @@ export const Board = defineComponent({
       Math.max(...props.cards.map((item) => item.zIndex))
     )
     const onClick = () => props.add()
-    onMounted(() => {
-      console.log(maxzIndex)
-    })
     return () => (
       <div class={styles.boardContainer}>
         {props.cards.map((card, i) => (

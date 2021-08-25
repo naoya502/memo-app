@@ -68,6 +68,7 @@ export default defineComponent({
       cardId: Card['cardId'],
       position: Position
     ) => {
+      console.log('position', position, 'roomId', roomId.value)
       const validateRoomId = roomId.value
       if (validateRoomId === undefined) return
 
