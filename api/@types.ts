@@ -8,6 +8,7 @@ export type Card = {
   text: string
   color: string
   position: Position
+  zIndex: number
 }
 
 export type Room = {

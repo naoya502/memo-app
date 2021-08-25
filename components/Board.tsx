@@ -1,6 +1,6 @@
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { computed, defineComponent, PropType } from '@nuxtjs/composition-api'
 import { Card, Position } from '~/api/@types'
-import { StickyCard } from './StickyCard'
+import { CardContainer } from './CardContainer'
 import styles from './styles.module.css'
 
 export const Board = defineComponent({
@@ -29,24 +29,30 @@ export const Board = defineComponent({
       >,
       required: true,
     },
+    zIndex: {
+      type: Function as PropType<
+        (cardId: Card['cardId'], zIndex: number) => void
+      >,
+      required: true,
+    },
   },
 
   setup(props) {
+    const maxzIndex = computed(() =>
+      Math.max(...props.cards.map((item) => item.zIndex))
+    )
     const onClick = () => props.add()
-
     return () => (
       <div class={styles.boardContainer}>
-        {props.cards.map((card) => (
-          <StickyCard
+        {props.cards.map((card, i) => (
+          <CardContainer
             key={card.cardId}
             card={card}
             input={(text) => props.input(card.cardId, text)}
             delete={() => props.delete(card.cardId)}
-            position={(positon) => props.position(card.cardId, positon)}
-            style={{
-              color: card.color,
-              gridRow: card.cardId / props.cards.length,
-            }}
+            position={(position) => props.position(card.cardId, position)}
+            zIndex={(cardId, zIndex) => props.zIndex(card.cardId, zIndex)}
+            maxzIndex={maxzIndex.value}
           />
         ))}
         <button class={styles.addButtom} type="submit" onClick={onClick}>

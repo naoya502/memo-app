@@ -28,6 +28,14 @@
   background-color: transparent;
   cursor: pointer;
 }
+.movingStickyArea {
+  position: fixed;
+  height: 32px;
+  background-color: #eee8;
+}
+.cardMoveArea {
+  position: absolute;
+}
 .addButtom {
   position: absolute;
   left: 5%;
@@ -38,6 +46,7 @@
   border: none;
   width: 48px;
   cursor: pointer;
+  z-index: 2147483647;
 }
 .stickyArea {
   position: relative;
@@ -50,7 +59,6 @@
   filter: invert(100%) grayscale(100%);
   background-color: transparent;
 }
-
 .cardContainer {
   display: flex;
   flex-direction: column;
